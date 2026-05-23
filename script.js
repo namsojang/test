@@ -8,7 +8,6 @@ window.addEventListener('scroll', () => {
 });
 
 // ── 파트너 탭 전환 ──
-const tabs = document.querySelectorAll('.tab');
 const tabContents = {
   '수익형': [
     '플랫폼별 자유롭게 게재에 단가 결정',
@@ -21,23 +20,27 @@ const tabContents = {
     '자동화로 인건비 90% 절감 가능',
   ],
 };
-const featureList = document.querySelector('.partner-features');
 
-tabs.forEach(tab => {
+document.querySelectorAll('.tab').forEach(tab => {
   tab.addEventListener('click', () => {
-    tabs.forEach(t => { t.classList.remove('active'); t.classList.add('inactive'); });
-    tab.classList.add('active'); tab.classList.remove('inactive');
-    const items = tabContents[tab.textContent.trim()] || [];
-    featureList.innerHTML = items.map(i => `<li>${i}</li>`).join('');
+    document.querySelectorAll('.tab').forEach(t => {
+      t.classList.toggle('active', t === tab);
+      t.classList.toggle('inactive', t !== tab);
+    });
+    const list = document.querySelector('.partner-features');
+    if (list) {
+      const items = tabContents[tab.textContent.trim()] || [];
+      list.innerHTML = items.map(i => `<li>${i}</li>`).join('');
+    }
   });
 });
 
-// ── 스토리 슬라이더 ──
+// ── 스토리 슬라이더 (모바일) ──
 const storyCards = document.querySelectorAll('.story-card');
 let currentStory = 0;
 
 function showStory(idx) {
-  if (window.innerWidth > 768) return; // 데스크탑은 전체 표시
+  if (window.innerWidth > 768) return;
   storyCards.forEach((c, i) => {
     c.style.display = i === idx ? 'block' : 'none';
   });
@@ -62,44 +65,49 @@ document.querySelectorAll('.faq-q').forEach(q => {
   });
 });
 
-// ── 문의 폼 제출 (Web3Forms) ──
-const form = document.getElementById('contactForm');
-const submitBtn = form?.querySelector('.form-submit');
-if (form) {
-  form.addEventListener('submit', async e => {
-    e.preventDefault();
-    submitBtn.textContent = '전송 중...';
-    submitBtn.disabled = true;
-
-    const data = new FormData(form);
-    try {
-      const res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        body: data,
-      });
-      const json = await res.json();
-      if (json.success) {
-        form.style.display = 'none';
-        document.querySelector('.form-success').style.display = 'block';
-      } else {
-        alert('전송에 실패했습니다. 잠시 후 다시 시도해주세요.');
-        submitBtn.textContent = '문의 보내기 →';
-        submitBtn.disabled = false;
-      }
-    } catch {
-      alert('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
-      submitBtn.textContent = '문의 보내기 →';
-      submitBtn.disabled = false;
-    }
-  });
-}
-
-// ── 스무스 스크롤 (네비 링크) ──
+// ── 스무스 스크롤 ──
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     const target = document.querySelector(a.getAttribute('href'));
     if (!target) return;
     e.preventDefault();
     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+// ── 문의 폼 (Web3Forms) ──
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('contactForm');
+  if (!form) return;
+
+  const submitBtn = form.querySelector('.form-submit');
+  const successMsg = form.closest('.form-box')?.querySelector('.form-success');
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (submitBtn) { submitBtn.textContent = '전송 중...'; submitBtn.disabled = true; }
+
+    const data = new FormData(form);
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: data,
+      });
+      const json = await res.json();
+
+      if (json.success) {
+        form.style.display = 'none';
+        if (successMsg) successMsg.style.display = 'block';
+      } else {
+        alert('전송 실패: ' + (json.message || '잠시 후 다시 시도해주세요.'));
+        if (submitBtn) { submitBtn.textContent = '문의 보내기 →'; submitBtn.disabled = false; }
+      }
+    } catch (err) {
+      alert('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      if (submitBtn) { submitBtn.textContent = '문의 보내기 →'; submitBtn.disabled = false; }
+    }
   });
 });
