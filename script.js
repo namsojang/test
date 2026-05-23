@@ -62,13 +62,35 @@ document.querySelectorAll('.faq-q').forEach(q => {
   });
 });
 
-// ── 문의 폼 제출 ──
+// ── 문의 폼 제출 (Web3Forms) ──
 const form = document.getElementById('contactForm');
+const submitBtn = form?.querySelector('.form-submit');
 if (form) {
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', async e => {
     e.preventDefault();
-    form.style.display = 'none';
-    document.querySelector('.form-success').style.display = 'block';
+    submitBtn.textContent = '전송 중...';
+    submitBtn.disabled = true;
+
+    const data = new FormData(form);
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: data,
+      });
+      const json = await res.json();
+      if (json.success) {
+        form.style.display = 'none';
+        document.querySelector('.form-success').style.display = 'block';
+      } else {
+        alert('전송에 실패했습니다. 잠시 후 다시 시도해주세요.');
+        submitBtn.textContent = '문의 보내기 →';
+        submitBtn.disabled = false;
+      }
+    } catch {
+      alert('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      submitBtn.textContent = '문의 보내기 →';
+      submitBtn.disabled = false;
+    }
   });
 }
 
