@@ -48,8 +48,8 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,.08); }
 /* ── HERO ── */
 #hero {
   background: linear-gradient(135deg, #2B4FD0 0%, #3D6EF5 50%, #5B87FF 100%);
-  padding: 130px 0 64px;
-  position: relative; overflow: hidden;
+  padding: 130px 0 80px;
+  position: relative; overflow: visible;
 }
 #hero::before {
   content: '';
@@ -106,7 +106,7 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,.08); }
 .wave-dark { display: block; margin-bottom: -2px; }
 
 /* ── PROCESS ── */
-#process { background: var(--white); padding: 80px 0 96px; }
+#process { background: var(--white); padding: 80px 0 120px; position: relative; overflow: visible; }
 .process-top { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 64px; }
 .process-top .left .eyebrow { font-size: 12px; font-weight: 700; color: var(--blue); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 12px; }
 .process-top .left h2 { font-size: clamp(24px, 3.5vw, 38px); font-weight: 900; line-height: 1.3; }

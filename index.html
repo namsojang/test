@@ -66,12 +66,12 @@
       <span class="hero-card-arrow">→</span>
     </div>
   </div>
-</section>
 
-<!-- wave 구분 -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 80" preserveAspectRatio="none" style="display:block;background:linear-gradient(135deg,#2B4FD0,#5B87FF);margin-bottom:-2px">
-  <path fill="#ffffff" d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z"/>
-</svg>
+  <!-- wave: hero 안에 절대 위치 -->
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 80" preserveAspectRatio="none" style="position:absolute;bottom:-1px;left:0;width:100%;display:block;z-index:1">
+    <path fill="#ffffff" d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z"/>
+  </svg>
+</section>
 
 <!-- ── 2. PROCESS ── -->
 <section id="process">
@@ -109,16 +109,14 @@
         <p>대시보드에서 발행 현황과<br>성과를 확인하세요.</p>
       </div>
     </div>
-  </div>
+  <!-- wave: process → dark -->
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 80" preserveAspectRatio="none" style="position:absolute;bottom:-1px;left:0;width:100%;display:block;z-index:1">
+    <path fill="#141B2D" d="M0,40 C360,0 1080,80 1440,40 L1440,80 L0,80 Z"/>
+  </svg>
 </section>
 
-<!-- wave → 다크 -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 80" preserveAspectRatio="none" style="display:block;background:#fff;margin-top:-2px;margin-bottom:-2px">
-  <path fill="#141B2D" d="M0,40 C360,0 1080,80 1440,40 L1440,80 L0,80 Z"/>
-</svg>
-
 <!-- ── 3. DARK — 파트너/기능 ── -->
-<section id="features" style="background:#141B2D;padding:0 0 96px">
+<section id="features" style="background:#141B2D;padding:0 0 120px;position:relative;overflow:visible">
   <div class="container">
     <div class="partner-inner">
       <div class="partner-left" data-aos="fade-right">
@@ -158,13 +156,11 @@
         <p style="color:rgba(255,255,255,.5);font-size:13px;line-height:1.7">콘텐츠를 큐에 넣어두면 설정된 순서대로 자동으로 처리됩니다.</p>
       </div>
     </div>
-  </div>
+  <!-- wave: dark → story -->
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 80" preserveAspectRatio="none" style="position:absolute;bottom:-1px;left:0;width:100%;display:block;z-index:1">
+    <path fill="#F4F6FB" d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z"/>
+  </svg>
 </section>
-
-<!-- wave → 밝게 -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 80" preserveAspectRatio="none" style="display:block;background:#141B2D;margin-top:-2px;margin-bottom:-2px">
-  <path fill="#F4F6FB" d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z"/>
-</svg>
 
 <!-- ── 4. STORY / 후기 ── -->
 <section id="story">
