@@ -65,18 +65,21 @@ document.querySelectorAll('.faq-q').forEach(q => {
   });
 });
 
-// ── 스무스 스크롤 ──
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const target = document.querySelector(a.getAttribute('href'));
-    if (!target) return;
-    e.preventDefault();
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-});
-
-// ── 문의 폼 (Web3Forms) ──
+// ── 문의 폼 + 스무스 스크롤 ──
 document.addEventListener('DOMContentLoaded', () => {
+
+  // 스무스 스크롤
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const href = a.getAttribute('href');
+      const target = document.querySelector(href);
+      if (!target) return;
+      e.preventDefault();
+      const navH = document.getElementById('mainNav')?.offsetHeight || 64;
+      const top = target.getBoundingClientRect().top + window.scrollY - navH;
+      window.scrollTo({ top, behavior: 'smooth' });
+    });
+  });
   const form = document.getElementById('contactForm');
   if (!form) return;
 
